@@ -17,6 +17,86 @@ See listed as remotes/origin/branch-name.
 
 
 
+## Undo the most recent local commits
+
+Undoing a commit is a little scary if you don't know how it works. But it's actually amazingly easy if you do understand. I'll show you the 4 different ways you can undo a commit.
+
+##### option 1: git reset --hard
+
+Say you have this, where C is your HEAD and (F) is the state of your files.
+
+```cs
+   (F)
+A-B-C
+    ↑
+  master
+```
+
+You want to nuke commit C and never see it again and lose all the changes in locally modified files. You do this:
+
+```git reset --hard HEAD~1```
+
+The result is:
+
+```cs
+ (F)
+A-B
+  ↑
+master
+```
+
+Now B is the HEAD. Because you used --hard, your files are reset to their state at commit B.
+
+
+##### option 2: git reset
+
+Ah, but suppose commit C wasn't a disaster, but just a bit off. You want to undo the commit but keep your changes for a bit of editing before you do a better commit. Starting again from here, with C as your HEAD:
+
+```cs
+   (F)
+A-B-C
+    ↑
+  master
+```
+
+You can do this, leaving off the --hard:
+
+```git reset HEAD~1```
+
+In this case the result is:
+
+```cs
+   (F)
+A-B-C
+  ↑
+master
+```
+
+In both cases, HEAD is just a pointer to the latest commit. When you do a git reset HEAD~1, you tell Git to move the HEAD pointer back one commit. But (unless you use --hard) you leave your files as they were. So now git status shows the changes you had checked into C. You haven't lost a thing!
+
+##### option 3: git reset --soft
+
+For the lightest touch, you can even undo your commit but leave your files and your index:
+
+
+```git reset --soft HEAD~1```
+
+This not only leaves your files alone, it even leaves your index alone. When you do git status, you'll see that the same files are in the index as before. In fact, right after this command, you could do git commit and you'd be redoing the same commit you just had.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## How to undo 'git reset'? OR redo
 
 - ```git reflog```

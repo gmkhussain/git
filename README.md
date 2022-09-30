@@ -125,3 +125,42 @@ f70438c HEAD@{10}: commit: Tracking state and validity
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+## Rename a Remote Git Branch
+1. Verify the local branch has the correct name:
+```
+git branch -a
+```
+
+
+2. Next, delete the branch with the old name on the remote repository:
+```
+git push origin --delete old-name
+```
+
+
+3. Finally, push the branch with the correct name, and reset the upstream branch:
+```
+git push origin -u new-name
+```
+OR
+```
+git push origin :old-name new-name
+```
+
+Resetting the upstream branch is still required:
+```
+git push origin -u new-name
+```
+
